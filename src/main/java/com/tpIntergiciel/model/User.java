@@ -1,9 +1,8 @@
-package com.tpIntergiciel.entity;
+package com.tpIntergiciel.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import com.tpIntergiciel.entity.User;
+import javax.persistence.*;
+
+import java.util.List;
 
 /**
  * Created by abdel on 18/12/2016.
@@ -11,14 +10,24 @@ import com.tpIntergiciel.entity.User;
 @Entity
 public class User {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idClient;
 	private String nom;
 	private String prenom;
 	private String username;
 	private String password;
+	@OneToMany(mappedBy = "client")
+	private List<Compte> listComptes;
 
 	public User() {
+	}
+
+	public User(User user) {
+		this.nom = user.nom;
+		this.prenom = user.prenom;
+		this.username = user.username;
+		this.password = user.password;
+		this.listComptes = user.listComptes;
 	}
 
 	public long getIdClient() {
@@ -61,14 +70,11 @@ public class User {
 		this.password = password;
 	}
 
-	@Override
-	public String toString() {
-		return "User{" +
-				"idClient=" + idClient +
-				", nom='" + nom + '\'' +
-				", prenom='" + prenom + '\'' +
-				", username='" + username + '\'' +
-				", password='" + password + '\'' +
-				'}';
+	public List<Compte> getListComptes() {
+		return listComptes;
+	}
+
+	public void setListComptes(List<Compte> listComptes) {
+		this.listComptes = listComptes;
 	}
 }

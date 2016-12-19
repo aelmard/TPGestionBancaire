@@ -46,13 +46,14 @@ public class DatabaseConfig {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
 		LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactory.setDataSource(dataSource);
-		entityManagerFactory.setPackagesToScan("com/tpIntergiciel/entity");
+		entityManagerFactory.setPackagesToScan("com/tpIntergiciel/model");
 		entityManagerFactory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 		Properties props = new Properties();
 		props.put("hibernate.show_sql", "true");
 		props.put("hibernate.id.new_generator_mappings", "false");
 		props.put("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
 		props.put("hibernate.hbm2ddl.auto", "create-drop");
+		props.put("hibernate.hbm2ddl.import_files", "insert.sql");
 		entityManagerFactory.setJpaProperties(props);
 		return entityManagerFactory;
 	}
