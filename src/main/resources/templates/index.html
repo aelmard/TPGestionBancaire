@@ -1,10 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Accueil </title>
+    <title>Accueil Banque</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-    <h4>Vous etes dans l'accueil</h4>
+<h1 align="center">Bienvenue dans le site de votre banque</h1>
+
+<div th:if="${#httpServletRequest.remoteUser}">
+    <h1 th:inline="text">Bienvenue [[${#httpServletRequest.remoteUser}]]</h1>
+    <div id="menu_horizontal">
+        <ul id="onglets">
+            <li class="active"><a href="index.html"> Accueil </a></li>
+            <li><a href="#"> S'inscrire </a></li>
+            <li><a href="/account"> Accéder à mes comptes </a></li>
+            <li><a href="/logout"> Déconnexion </a></li>
+        </ul>
+    </div>
+</div>
+
+<div th:unless="${#httpServletRequest.remoteUser}">
+    <form name='loginForm'
+          th:action="@{/login}" method='POST'>
+        <fieldset>
+            <legend>Veuillez vous connecter pour accéder au site</legend>
+            <div th:if="${param.error}">
+                <p>Email et mot de passe non reconnu !!</p>
+            </div>
+            <div th:if="${param.logout}">
+                <p>Deconnexion reussi</p>
+            </div>
+            <label>Nom d'utilisateur</label>
+            <br/>
+            <input type="text" name="username" id="username"/>
+            <br/>
+            <label>Mot de Passe</label>
+            <br/>
+            <input type="password" name="password" id="password"/>
+            <br/>
+            <br/>
+            <input type="submit" value="Se connecter"/>
+        </fieldset>
+    </form>
+</div>
+
 </body>
 </html>

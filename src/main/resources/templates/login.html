@@ -1,37 +1,34 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Login Page </title>
+    <title>Se connecter</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-
+<h1 align="center">Connexion obligatoire</h1>
 <form name='loginForm'
       th:action="@{/login}" method='POST'>
-
-    <div th:if="${param.error}">
-        <p>Email et mot de passe non reconnu !!</p>
-    </div>
-    <div th:if="${param.logout}">
-        <p>Deconnexion reussi</p>
-    </div>
-
-    <div th:if="${#httpServletRequest.remoteUser}">
-        <h1 th:inline="text">Vous êtes connectés en tant que : [[${#httpServletRequest.remoteUser}]]</h1>
-        <a href="/logout">logout</a>
-    </div>
-
-    <label>Username</label>
-    <input type="text" name="username" id="username"/>
-
-    <label>Mot de passe</label>
-    <input type="password" name="password" id="password"/>
-
-    <br/>
-    <br/>
-    <input type="submit" value="Connexion"/>
+    <fieldset>
+        <legend>Veuillez vous connecter pour accéder au site</legend>
+        <div th:if="${param.error}">
+            <p>Email et mot de passe non reconnu !!</p>
+        </div>
+        <div th:if="${param.logout}">
+            <p>Deconnexion reussi</p>
+        </div>
+        <label>Nom d'utilisateur</label>
+        <br/>
+        <input type="text" name="username" id="username"/>
+        <br/>
+        <label>Mot de Passe</label>
+        <br/>
+        <input type="password" name="password" id="password"/>
+        <br/>
+        <br/>
+        <input type="submit" value="Se connecter"/>
+    </fieldset>
 </form>
+
 </body>
 </html>
 

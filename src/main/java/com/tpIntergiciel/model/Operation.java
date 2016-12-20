@@ -55,4 +55,12 @@ public class Operation {
     public void setDateOperation(Date dateOperation) {
         this.dateOperation = dateOperation;
     }
+
+    public Compte getCompte() {
+        return compte;
+    }
+
+    public void setCompte(Compte compte) {
+        this.compte = compte;
+    }
 }

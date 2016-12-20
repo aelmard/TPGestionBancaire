@@ -1,5 +1,7 @@
 package com.tpIntergiciel.model;
 
+import org.hibernate.annotations.DiscriminatorOptions;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -8,12 +10,12 @@ import java.util.List;
  * Created by a602259 on 19/12/2016.
  */
 @Entity
-public class Compte {
+@DiscriminatorColumn(name="TYPE_COMPTE")
+public abstract class Compte {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idCompte;
-    private String typeCompte;
-    private double decouvert;
+    private double solde;
     @ManyToOne()
     @JoinColumn(name = "IDCLIENT")
     private User client;
@@ -34,20 +36,12 @@ public class Compte {
         this.idCompte = idCompte;
     }
 
-    public String getTypeCompte() {
-        return typeCompte;
+    public double getSolde() {
+        return solde;
     }
 
-    public void setTypeCompte(String typeCompte) {
-        this.typeCompte = typeCompte;
-    }
-
-    public double getDecouvert() {
-        return decouvert;
-    }
-
-    public void setDecouvert(double decouvert) {
-        this.decouvert = decouvert;
+    public void setSolde(double solde) {
+        this.solde = solde;
     }
 
     public User getClient() {

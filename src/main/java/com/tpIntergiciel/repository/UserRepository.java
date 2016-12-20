@@ -10,4 +10,5 @@ import com.tpIntergiciel.model.User;
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
 	User findByUsername(String username);
+	User findByIdClient(long idClient);
 }

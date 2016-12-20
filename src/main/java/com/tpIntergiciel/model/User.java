@@ -16,13 +16,15 @@ public class User {
 	private String prenom;
 	private String username;
 	private String password;
-	@OneToMany(mappedBy = "client")
+
+	@OneToMany()
 	private List<Compte> listComptes;
 
 	public User() {
 	}
 
 	public User(User user) {
+		this.idClient = user.idClient;
 		this.nom = user.nom;
 		this.prenom = user.prenom;
 		this.username = user.username;
