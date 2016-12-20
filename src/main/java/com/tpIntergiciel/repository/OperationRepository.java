@@ -12,4 +12,5 @@ import java.util.List;
  */
 public interface OperationRepository extends CrudRepository<Operation, Long> {
     List<Operation> findAllByCompte(Compte compte);
+    List<Operation> findAll();
 }

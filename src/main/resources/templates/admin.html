@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Admin Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1 align="center">Bienvenue dans l'administration</h1>
+
+<h1 th:inline="text">Bienvenue [[${#httpServletRequest.remoteUser}]] !!</h1>
+<div id="menu_horizontal">
+    <ul id="onglets">
+        <li class="active"><a href="index.html"> Accueil </a></li>
+        <li><a href="/accounts"> Liste des comptes clients </a></li>
+        <li><a href="/users"> Liste des clients </a></li>
+        <li><a href="/logout"> Déconnexion </a></li>
+    </ul>
+</div>
+</body>
+</html>

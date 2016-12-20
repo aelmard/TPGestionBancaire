@@ -12,7 +12,8 @@
     <div id="menu_horizontal">
         <ul id="onglets">
             <li class="active"><a href="index.html"> Accueil </a></li>
-            <li><a href="#"> S'inscrire </a></li>
+            <li><a href="/createAccount"> Création d'un compte </a></li>
+            <li><a href="/history"> Historique de mes opérations </a></li>
             <li><a href="/account"> Accéder à mes comptes </a></li>
             <li><a href="/logout"> Déconnexion </a></li>
         </ul>
@@ -20,10 +21,43 @@
 </div>
 
 <div th:unless="${#httpServletRequest.remoteUser}">
+    <form name='inscriptionForm'
+          th:action="@{/inscription}" method='POST'>
+        <fieldset>
+            <legend>Inscription d'un client</legend>
+            <div th:if="${param.exists}">
+                <p>Nom d'utilisateur deja existant !!</p>
+            </div>
+            <label>Nom d'utilisateur</label>
+            <br/>
+            <input type="text" name="usernameC" id="usernameC" th:required="required"/>
+            <br/>
+            <br/>
+            <label>Nom</label>
+            <br/>
+            <input type="text" name="nom" id="nom" th:required="required"/>
+            <br/>
+            <br/>
+            <label>Prénom</label>
+            <br/>
+            <input type="text" name="prenom" id="prenom" th:required="required"/>
+            <br/>
+            <br/>
+            <label>Mot de Passe</label>
+            <br/>
+            <input type="password" name="passwordC" id="passwordC" th:required="required"/>
+            <br/>
+            <br/>
+            <input type="submit" value="S'inscrire"/>
+        </fieldset>
+    </form>
+    <br/>
+    <br/>
+    <br/>
     <form name='loginForm'
           th:action="@{/login}" method='POST'>
         <fieldset>
-            <legend>Veuillez vous connecter pour accéder au site</legend>
+            <legend>Se connecter</legend>
             <div th:if="${param.error}">
                 <p>Email et mot de passe non reconnu !!</p>
             </div>

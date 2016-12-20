@@ -1,5 +1,6 @@
 package com.tpIntergiciel.repository;
 
+import com.tpIntergiciel.model.User;
 import com.tpIntergiciel.model.UserRole;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

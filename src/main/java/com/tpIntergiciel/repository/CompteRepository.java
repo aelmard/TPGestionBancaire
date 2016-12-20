@@ -16,4 +16,5 @@ public interface CompteRepository extends CrudRepository<Compte, Long> {
     //get allaccounts by client
     List<Compte> findAllByClient(User user);
     Compte findByIdCompte(long idCompte);
+    List<Compte> findAll();
 }

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Mes clients</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1 align="center">Liste des clients</h1>
+
+<h1 th:inline="text">Bienvenue [[${#httpServletRequest.remoteUser}]] !!</h1>
+<div id="menu_horizontal">
+    <ul id="onglets">
+        <li class="active"><a href="index.html"> Accueil </a></li>
+        <li><a href="/accounts"> Liste des comptes clients </a></li>
+        <li><a href="/users"> Liste des clients </a></li>
+        <li><a href="/logout"> Déconnexion </a></li>
+    </ul>
+</div>
+
+<div th:if="${not #lists.isEmpty(listUsers)}">
+    <TABLE border="1" align="center">
+        <TR>
+            <TH>N° Client</TH>
+            <TH>Nom</TH>
+            <TH>Prénom</TH>
+            <TH>Nom d'utilisateur</TH>
+        </TR>
+
+        <div th:each="user : ${listUsers}">
+            <TR>
+                <TD th:text="${user.idClient}"></TD>
+                <TD th:text="${user.nom}"></TD>
+                <TD th:text="${user.prenom}"></TD>
+                <TD th:text="${user.username}"></TD>
+            </TR>
+        </div>
+    </TABLE>
+    <br/>
+    <br/>
+</div>
+<div th:unless="${not #lists.isEmpty(listUsers)}">
+    <h1 align="center">Aucun clients</h1>
+</div>
+</body>
+</html>

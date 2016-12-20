@@ -11,4 +11,8 @@ import java.util.List;
 public interface AccountService {
     List<Compte> getAccountsByUser(User client);
     List<User> getAllUsers();
+    List<Compte> getAllAccounts();
+    boolean ifUserExists(String username);
+    void createUser(String usernameC, String passwordC, String nom, String prenom);
+    void createAccount(String typeCompte,double solde, double decouvert,User user);
 }

@@ -11,21 +11,28 @@ import java.util.List;
  */
 @Entity
 @DiscriminatorColumn(name="TYPE_COMPTE")
-public abstract class Compte {
+public class Compte {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idCompte;
-    private double solde;
+    protected long idCompte;
+    protected double solde;
     @ManyToOne()
     @JoinColumn(name = "IDCLIENT")
-    private User client;
+    protected User client;
     @Temporal(TemporalType.DATE)
-    private Date dateCompte = new Date();
+    protected Date dateCompte = new Date();
 
     @OneToMany(mappedBy = "compte")
-    private List<Operation> listOperations;
+    protected List<Operation> listOperations;
 
     public Compte() {
+        super();
+    }
+
+    public Compte(double solde, User client) {
+        super();
+        this.solde = solde;
+        this.client = client;
     }
 
     public long getIdCompte() {
@@ -58,5 +65,21 @@ public abstract class Compte {
 
     public void setDateCompte(Date dateCompte) {
         this.dateCompte = dateCompte;
+    }
+
+    public List<Operation> getListOperations() {
+        return listOperations;
+    }
+
+    public void setListOperations(List<Operation> listOperations) {
+        this.listOperations = listOperations;
+    }
+
+    public boolean isCourantCompte(){
+        return this instanceof CompteCourant;
+    }
+
+    public String getTypeCompte(){
+        return this.getClass().getSimpleName();
     }
 }

@@ -1,5 +1,6 @@
 package com.tpIntergiciel.model;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
@@ -11,6 +12,11 @@ public class CompteCourant extends Compte {
 
     public CompteCourant() {
         super();
+    }
+
+    public CompteCourant(User user, double solde, double decouvert) {
+        super(solde,user);
+        this.decouvert = decouvert;
     }
 
     public double getDecouvert() {
