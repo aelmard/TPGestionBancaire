@@ -3,6 +3,7 @@ package com.tpIntergiciel.service;
 import com.tpIntergiciel.model.*;
 import com.tpIntergiciel.repository.CompteRepository;
 import com.tpIntergiciel.repository.OperationRepository;
+import groovy.lang.Singleton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -31,7 +32,11 @@ public class OperationServiceImpl implements OperationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public double credit(int idCompte, double montant) {
         Compte compte = compteRepo.findByIdCompte(idCompte);
-        compte.setSolde(compte.getSolde() + montant);
+
+        double calcul = (compte.getSolde() + montant);
+        System.out.println("calcul : " + calcul);
+
+        compte.setSolde(calcul);
         compteRepo.save(compte);
 
         //Sauvegarde de l'opération en bdd
@@ -49,7 +54,9 @@ public class OperationServiceImpl implements OperationService {
     public double pret(int idCompte, double montant) {
         Compte compte = compteRepo.findByIdCompte(idCompte);
         if (compte.getSolde() >= 0) {
-            compte.setSolde(compte.getSolde() + montant);
+            double calcul = (compte.getSolde() + montant);
+            System.out.println("calcul : " + calcul);
+            compte.setSolde(calcul);
             compteRepo.save(compte);
 
             //Sauvegarde de l'opération en bdd
@@ -69,9 +76,9 @@ public class OperationServiceImpl implements OperationService {
     public double debit(int idCompte, double montant) {
         Compte compte = compteRepo.findByIdCompte(idCompte);
         if (compte instanceof CompteEpargne) {
-            double montanCredi = compte.getSolde() - montant;
+            double montanTotal = compte.getSolde() - montant;
             if (compte.getSolde() >= 0 && compte.getSolde() >= montant) {
-                compte.setSolde(montanCredi);
+                compte.setSolde(montanTotal);
                 compteRepo.save(compte);
                 //Sauvegarde de l'opération en bdd
                 Operation operation = new Operation();
@@ -84,9 +91,11 @@ public class OperationServiceImpl implements OperationService {
             }
         } else {
             CompteCourant courant = (CompteCourant) compte;
-            double montanCredi = courant.getSolde() + courant.getDecouvert();
-            if (montanCredi >= montant){
-                courant.setSolde(montanCredi);
+            double montanTotal = courant.getSolde() + courant.getDecouvert();
+            System.out.println(montanTotal);
+            if (montanTotal >= montant) {
+                double montantADeb = compte.getSolde() - montant;
+                courant.setSolde(montantADeb);
                 compteRepo.save(courant);
                 //Sauvegarde de l'opération en bdd
                 Operation operation = new Operation();

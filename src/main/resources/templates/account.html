@@ -18,6 +18,15 @@
     </ul>
 </div>
 
+<div th:if="${status}">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var message = [[${status}]];
+        alert('Erreur ' + message);
+        /*]]>*/
+    </script>
+</div>
+
 <div th:if="${not #lists.isEmpty(listAccounts)}">
     <TABLE border="1" align="center">
         <TR>
@@ -63,18 +72,6 @@
             <input type="submit" value="Valider"/>
         </fieldset>
     </form>
-
-    <script th:inline="javascript">
-        /*<![CDATA[*/
-        var message = [[${listAccounts}]];
-        alert(message[0].idCompte);
-
-        document.getElementById("operationForm").addEventListener("click", function () {
-
-            form.submit();
-        });
-        /*]]>*/
-    </script>
 </div>
 <div th:unless="${not #lists.isEmpty(listAccounts)}">
     <h1 align="center">Vous ne disposez d'aucun comptes</h1>

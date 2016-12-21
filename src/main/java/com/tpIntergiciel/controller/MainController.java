@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.List;
 import java.util.Set;
@@ -57,7 +58,7 @@ public class MainController {
         if (accountService.ifUserExists(usernameC)) {
             return "redirect:/index?exists";
         } else {
-            accountService.createUser(usernameC,passwordC,nom,prenom);
+            accountService.createUser(usernameC, passwordC, nom, prenom);
         }
         return "login";
     }
@@ -68,37 +69,50 @@ public class MainController {
     }
 
     @RequestMapping("/createAnAccount")
-    public String createAnAccount(String typeCompte,double solde, double decouvert) {
-        accountService.createAccount(typeCompte,solde,decouvert,getUserConnected());
+    public String createAnAccount(WebRequest request) {
+        String typeCompte = request.getParameter("typeCompte");
+        double solde = Double.parseDouble(request.getParameter("solde"));
+        if (request.getParameter("decouvert") != null) {
+            double decouvert = Double.parseDouble(request.getParameter("decouvert"));
+            accountService.createAccount(typeCompte, solde, decouvert, getUserConnected());
+        } else {
+            accountService.createAccount(typeCompte, solde, -1, getUserConnected());
+        }
         return "redirect:/account";
     }
 
     @RequestMapping("/placeOperation")
-    public void placeOperation(int idAccount, double montantOperation, String typeOperation, Model model) {
+    public String placeOperation(WebRequest request, Model model) {
+        int idAccount = Integer.parseInt(request.getParameter("idAccount"));
+        double montantOperation = Double.parseDouble(request.getParameter("montantOperation"));
+        String typeOperation = request.getParameter("typeOperation");
         System.out.println(idAccount + ";" + montantOperation + ";" + typeOperation);
         if (typeOperation.equals("credit")) {
             System.out.println("Début opération de crédit");
             operationService.credit(idAccount, montantOperation);
+            return "redirect:/history";
         } else if (typeOperation.equals("pret")) {
             System.out.println("Début opération de pret");
             try {
                 operationService.pret(idAccount, montantOperation);
-                model.addAttribute("status", "OK");
+                return "redirect:/history";
             } catch (NumberFormatException e) {
                 System.out.println(e);
-                model.addAttribute("status", "KO");
+                model.addAttribute("status", e.toString());
+                return accessToAccount(model);
             }
         } else if (typeOperation.equals("debit")) {
             System.out.println("Début opération de debit");
             try {
                 operationService.debit(idAccount, montantOperation);
-                model.addAttribute("status", "OK");
+                return "redirect:/history";
             } catch (NumberFormatException e) {
                 System.out.println(e);
-                model.addAttribute("status", "KO");
+                model.addAttribute("status", e.toString());
+                return accessToAccount(model);
             }
         }
-        //return "redirect:/account";
+        return "redirect:/history";
     }
 
     @RequestMapping("/account")
