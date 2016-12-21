@@ -74,7 +74,7 @@ public class MainController {
     }
 
     @RequestMapping("/placeOperation")
-    public String placeOperation(int idAccount, double montantOperation, String typeOperation, Model model) {
+    public void placeOperation(int idAccount, double montantOperation, String typeOperation, Model model) {
         System.out.println(idAccount + ";" + montantOperation + ";" + typeOperation);
         if (typeOperation.equals("credit")) {
             System.out.println("Début opération de crédit");
@@ -98,7 +98,7 @@ public class MainController {
                 model.addAttribute("status", "KO");
             }
         }
-        return "redirect:/account";
+        //return "redirect:/account";
     }
 
     @RequestMapping("/account")

@@ -13,7 +13,7 @@
         <li class="active"><a href="index.html"> Accueil </a></li>
         <li><a href="/createAccount"> Création d'un compte </a></li>
         <li><a href="/history"> Historique de mes opérations </a></li>
-        <li><a href="/account"> Accéder à mes comptes </a></li>
+        <li><a href="/account"> Effectuer une opération </a></li>
         <li><a href="/logout"> Déconnexion </a></li>
     </ul>
 </div>
@@ -21,23 +21,36 @@
 <form name='createAccount'
       th:action="@{/createAnAccount}" method='POST'>
     <fieldset>
-        <legend>  Création d'un compte bancaire  </legend>
+        <legend> Création d'un compte bancaire</legend>
         <label>Type de compte</label>
         <br/>
-        <select name="typeCompte">
-            <option value="courant"> Compte Courant</option>
+        <select name="typeCompte" id="typeCompte" onchange="onChangeValue()">
             <option value="epargne"> Compte Epargne</option>
+            <option value="courant"> Compte Courant</option>
         </select>
         <br/>
         <br/>
         <label>Solde</label>
         <br/>
         <input type="number" name="solde" min="1" step="0.5" value="1" th:required="required"/>
-        <br/>
-        <br/>
-        <label>Découvert autorisé</label>
-        <br/>
-        <input type="number" name="decouvert" min="1" step="0.5" value="1" th:required="required"/>
+        <div id="decouvertInput">
+        </div>
+
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            function onChangeValue() {
+                var typeCSelect = document.getElementById('typeCompte');
+                var typeCompte = typeCSelect.options[typeCSelect.selectedIndex].value;
+                if (typeCompte == 'courant') {
+                    var myDiv = document.getElementById('decouvertInput');
+                    myDiv.innerHTML = '<br/> <br/> <label>Découvert autorisé</label> <br/> <input type="number" name="decouvert" min="1" step="0.5" value="1" required/>';
+                } else {
+                    var myDiv = document.getElementById('decouvertInput');
+                    myDiv.innerHTML = '';
+                }
+            }
+            /*]]>*/
+        </script>
         <br/>
         <br/>
         <input type="submit" value="Création du compte"/>

@@ -13,13 +13,13 @@
         <li class="active"><a href="index.html"> Accueil </a></li>
         <li><a href="/createAccount"> Création d'un compte </a></li>
         <li><a href="/history"> Historique de mes opérations </a></li>
-        <li><a href="/account"> Accéder à mes comptes </a></li>
+        <li><a href="/account"> Effectuer une opération </a></li>
         <li><a href="/logout"> Déconnexion </a></li>
     </ul>
 </div>
 
 <div th:if="${not #lists.isEmpty(listAccounts)}">
-    <TABLE border="1" align="center">
+    <TABLE border="1" align="center" id="table" style="visibility: hidden">
         <TR>
             <TH>N° Compte</TH>
             <TH>N° Opération</TH>
@@ -28,8 +28,16 @@
             <TH>Date de l'opération</TH>
         </TR>
 
+        <h1 align="center" id="titre">Aucune opérations a été effectuées</h1>
+
         <div th:each="account : ${listAccounts}">
             <div th:if="${not #lists.isEmpty(account.listOperations)}">
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    document.getElementById('titre').style.display = 'none';
+                    document.getElementById('table').style.visibility = 'visible';
+                    /*]]>*/
+                </script>
                 <div th:each="operation : ${account.listOperations}">
                     <TR>
                         <TD th:text="${account.idCompte}"></TD>
