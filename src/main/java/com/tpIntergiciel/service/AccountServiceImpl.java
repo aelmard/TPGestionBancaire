@@ -24,6 +24,30 @@ public class AccountServiceImpl implements AccountService {
     private UserRolesRepository roleRepo;
 
     @Override
+    public User getUserByUserName(String userName) {
+        if (userRepo.findByUsername(userName) != null) {
+            return userRepo.findByUsername(userName);
+        } else return null;
+    }
+
+    @Override
+    public User getUserByIdClient(long idClient) {
+        if (userRepo.findByIdClient(idClient) != null) {
+            return userRepo.findByIdClient(idClient);
+        } else return null;
+    }
+
+    @Override
+    public Compte getFirstAccount(User client) {
+        if (client != null) {
+            User c = userRepo.findByIdClient(client.getIdClient());
+            if (c != null) {
+                return compteRepo.findFirstByClient(client);
+            } else return null;
+        } else return null;
+    }
+
+    @Override
     public List<Compte> getAccountsByUser(User client) {
         if (client != null) {
             User c = userRepo.findByIdClient(client.getIdClient());
@@ -64,10 +88,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void createAccount(String typeCompte, double solde, double decouvert, User user) {
         if (typeCompte.equals("courant")) {
-            CompteCourant courant = new CompteCourant(user,solde,decouvert);
+            CompteCourant courant = new CompteCourant(user, solde, decouvert);
             compteRepo.save(courant);
         } else {
-            CompteEpargne epargne = new CompteEpargne(user,solde);
+            CompteEpargne epargne = new CompteEpargne(user, solde);
             compteRepo.save(epargne);
         }
     }

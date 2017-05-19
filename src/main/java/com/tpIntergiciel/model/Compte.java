@@ -1,5 +1,6 @@
 package com.tpIntergiciel.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.DiscriminatorOptions;
 
 import javax.persistence.*;
@@ -18,11 +19,13 @@ public class Compte {
     protected double solde;
     @ManyToOne()
     @JoinColumn(name = "IDCLIENT")
+    @JsonIgnore
     protected User client;
     @Temporal(TemporalType.DATE)
     protected Date dateCompte = new Date();
 
     @OneToMany(mappedBy = "compte")
+    @JsonIgnore
     protected List<Operation> listOperations;
 
     public Compte() {
@@ -75,6 +78,7 @@ public class Compte {
         this.listOperations = listOperations;
     }
 
+    @JsonIgnore
     public boolean isCourantCompte(){
         return this instanceof CompteCourant;
     }

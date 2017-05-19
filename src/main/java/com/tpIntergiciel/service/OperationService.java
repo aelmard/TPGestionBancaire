@@ -1,5 +1,6 @@
 package com.tpIntergiciel.service;
 
+import com.tpIntergiciel.model.Compte;
 import com.tpIntergiciel.model.Operation;
 import com.tpIntergiciel.model.User;
 
@@ -10,11 +11,13 @@ import java.util.List;
  */
 public interface OperationService {
 
+    List<Operation> getAllOperationByCompte(Compte compte);
+
     List<Operation> getAllOperation();
 
-    double credit(int idCompte, double montant);
+    double credit(long idCompte, double montant);
 
-    double debit(int idCompte, double montant);
+    double debit(long idCompte, double montant);
 
-    double pret(int idCompte, double montant);
+    double pret(long idCompte, double montant);
 }

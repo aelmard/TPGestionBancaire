@@ -1,5 +1,7 @@
 package com.tpIntergiciel.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 import java.util.List;
@@ -18,6 +20,7 @@ public class User {
 	private String password;
 
 	@OneToMany()
+	@JsonIgnore
 	private List<Compte> listComptes;
 
 	public User() {
@@ -79,4 +82,5 @@ public class User {
 	public void setListComptes(List<Compte> listComptes) {
 		this.listComptes = listComptes;
 	}
+
 }

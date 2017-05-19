@@ -24,13 +24,18 @@ public class OperationServiceImpl implements OperationService {
     private OperationRepository operationRepo;
 
     @Override
+    public List<Operation> getAllOperationByCompte(Compte compte) {
+        return operationRepo.findAllByCompte(compte);
+    }
+
+    @Override
     public List<Operation> getAllOperation() {
         return operationRepo.findAll();
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public double credit(int idCompte, double montant) {
+    public double credit(long idCompte, double montant) {
         Compte compte = compteRepo.findByIdCompte(idCompte);
 
         double calcul = (compte.getSolde() + montant);
@@ -51,7 +56,7 @@ public class OperationServiceImpl implements OperationService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public double pret(int idCompte, double montant) {
+    public double pret(long idCompte, double montant) {
         Compte compte = compteRepo.findByIdCompte(idCompte);
         if (compte.getSolde() >= 0) {
             double calcul = (compte.getSolde() + montant);
@@ -73,7 +78,7 @@ public class OperationServiceImpl implements OperationService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public double debit(int idCompte, double montant) {
+    public double debit(long idCompte, double montant) {
         Compte compte = compteRepo.findByIdCompte(idCompte);
         if (compte instanceof CompteEpargne) {
             double montanTotal = compte.getSolde() - montant;

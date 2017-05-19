@@ -32,7 +32,7 @@
                 <TR>
                     <TD th:text="${account.client.username}"></TD>
                     <TD th:text="${account.idCompte}"></TD>
-                    <TD th:text="${account.class.name}"></TD>
+                    <TD th:text="${account.getTypeCompte()}"></TD>
                     <TD th:text="${account.solde} + ' €'"></TD>
                     <TD th:text="${account.dateCompte}"></TD>
                 </TR>
